@@ -1,5 +1,9 @@
 # llvm-examples-cct-cfg-dfa
 
+![Level 2 CFG (run_pipeline)](output/level2/cfg/run_pipeline.svg)
+
+> The screenshot above is produced by running `RUN_VISUALIZE=1 ./runme.sh`. Entry blocks are highlighted in green, exit blocks in red, and intermediate blocks in blue for readability.
+
 Learning repo with **LLVM-based** examples in C/C++ for:
 - **Calling Context Trees (CCT)** via a tiny instrumentation pass + runtime
 - **Control-Flow Graphs (CFG)** by emitting GraphViz `.dot` files
@@ -38,8 +42,8 @@ clang -emit-llvm -S examples/level1/calls.c  -o build/calls.ll
 LLVM_EXAMPLES_OUTDIR=output/level1 opt -load-pass-plugin build/plugins/CFGDot/CFGDot$([[ "$OSTYPE" == "darwin"* ]] && echo .dylib || echo .so) \
     -passes="function(cfg-dot)" -disable-output build/branch.ll
 # DOT files will be in ./output/level1/cfg/*.dot
-# Render with graphviz:
-dot -Tpng output/level1/cfg/foo.dot -o output/level1/cfg/foo.png
+# Render with graphviz as SVG:
+dot -Tsvg output/level1/cfg/foo.dot -o output/level1/cfg/foo.svg
 ```
 
 ### 4) Liveness (backward data-flow)
@@ -47,7 +51,7 @@ dot -Tpng output/level1/cfg/foo.dot -o output/level1/cfg/foo.png
 ```bash
 LLVM_EXAMPLES_OUTDIR=output/level1 opt -load-pass-plugin build/plugins/DataFlow/Liveness$([[ "$OSTYPE" == "darwin"* ]] && echo .dylib || echo .so) \
     -passes="function(liveness)" -disable-output build/branch.ll
-# Results written to ./output/level1/liveness/<function>.txt
+# Results written to ./output/level1/liveness/<function>.txt (use the helper scripts to convert them into *.svg heatmaps)
 ```
 
 ### 5) CCT: instrument & run (two ways)
@@ -83,6 +87,19 @@ clang examples/level1/calls.c -O0 -g -Xclang -disable-O0-optnone \
 
 Prefer manual steps? Compile each C file in `examples/level2/` to LLVM bitcode (`clang -O0 -Xclang -disable-O0-optnone -emit-llvm -c ...`), combine them with `llvm-link` (producing something like `level2-module.ll`), set `LLVM_EXAMPLES_OUTDIR=output/level2`, and invoke the `opt` commands above on the linked module.
 
+### Visualization Pipeline
+
+Need ready-to-share diagrams and a consolidated report? Run:
+
+```bash
+./visualize.sh
+# -> reruns ./runme.sh, converts DOT→SVG, plots liveness heatmaps, and writes output/report.md
+```
+
+Need a single command for first-time setup? Set `RUN_VISUALIZE=1 ./runme.sh` to run the core pipeline and immediately invoke the visualization helpers (they will reuse the freshly generated `output/` tree). For incremental updates where the IR already exists, run `SKIP_RUNME=1 ./visualize.sh` to regenerate SVGs/report only.
+
+This script regenerates `output/level*/` assets and `output/report.md` (Markdown with embedded SVGs and CCT dumps) so you can preview everything locally or commit the entire visualization bundle.
+
 > Passes always write generated artifacts under `./output` (default) or under the directory pointed to `LLVM_EXAMPLES_OUTDIR` (e.g., `output/level1/cfg`). Remove the directory (or override the env var) if you need a clean slate.
 
 > The `-fpass-plugin` driver flag loads LLVM **pass plugins** in `clang` (analogous to `opt -load-pass-plugin=...`).
@@ -101,6 +118,7 @@ Prefer manual steps? Compile each C file in `examples/level2/` to LLVM bitcode (
 ## Minimal prerequisites
 
 - LLVM/Clang **17+** with CMake config files (i.e., `llvm-config --cmakedir` works)
+- If you are using Spack, `spack install llvm@17.0.6+clang+lld` provides the tested toolchain
 - CMake 3.20+, a C++17 compiler
 - (optional) Graphviz `dot` to render CFGs
 

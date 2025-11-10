@@ -1,0 +1,5 @@
+r=3
+=== Calling Context Tree ===
+main [1]
+  bar [1]
+    baz [1]

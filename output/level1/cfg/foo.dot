@@ -1,0 +1,20 @@
+digraph "CFG of foo" {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#add8e6", fontname="Courier", fontsize=10];
+  edge [fontname="Courier", fontsize=9];
+  "0x55d9e74e9da0" [label="entry:\l  %v = alloca\l  %v = alloca\l  %v = alloca\l  ... (6 more)\l  br %8 ? ... : ...\l", fillcolor="#90ee90", style="rounded,filled", penwidth=2];
+  "0x55d9e74e9df0" [label="BB1:\l  %v = load\l  %v = sub\l  store\l  br ...\l"];
+  "0x55d9e74e9d50" [label="BB2:\l  br ...\l"];
+  "0x55d9e74ecb90" [label="BB3:\l  %v = load\l  %v = icmp sgt\l  br %15 ? ... : ...\l"];
+  "0x55d9e74ecd50" [label="BB4:\l  %v = load\l  %v = add\l  store\l  br ...\l"];
+  "0x55d9e74ecda0" [label="BB5:\l  %v = load\l  store\l  br ...\l"];
+  "0x55d9e74e9cb0" [label="BB6:\l  %v = load\l  ret %22\l", fillcolor="#f08080", style="rounded,filled"];
+  "0x55d9e74e9da0" -> "0x55d9e74e9df0" [label="T", color=green];
+  "0x55d9e74e9da0" -> "0x55d9e74e9d50" [label="F", color=red];
+  "0x55d9e74e9df0" -> "0x55d9e74e9cb0";
+  "0x55d9e74e9d50" -> "0x55d9e74ecb90";
+  "0x55d9e74ecb90" -> "0x55d9e74ecd50" [label="T", color=green];
+  "0x55d9e74ecb90" -> "0x55d9e74ecda0" [label="F", color=red];
+  "0x55d9e74ecd50" -> "0x55d9e74ecb90";
+  "0x55d9e74ecda0" -> "0x55d9e74e9cb0";
+}

@@ -1,0 +1,32 @@
+BasicBlock 0x56003d398e90:
+  IN  = {}
+  OUT = {%v0, %v1, %v2, %v3, %v4, %v5}
+
+BasicBlock 0x56003d398f50:
+  IN  = {%v0, %v1}
+  OUT = {%v0}
+
+BasicBlock 0x56003d399510:
+  IN  = {%v0, %v1, %v2, %v3, %v4, %v5}
+  OUT = {%v0, %v1, %v2, %v3, %v4, %v5}
+
+BasicBlock 0x56003d3999d0:
+  IN  = {%v0, %v1, %v2, %v3, %v4, %v5}
+  OUT = {%v0, %v1, %v2, %v3, %v4, %v5}
+
+BasicBlock 0x56003d399c00:
+  IN  = {%v0, %v1, %v2, %v3, %v4, %v5}
+  OUT = {%v0, %v1, %v2, %v3, %v4, %v5}
+
+BasicBlock 0x56003d39a400:
+  IN  = {%v0, %v1, %v2, %v3, %v4, %v5}
+  OUT = {%v0, %v1, %v2, %v3, %v4, %v5}
+
+BasicBlock 0x56003d399c50:
+  IN  = {%v0, %v4}
+  OUT = {%v0}
+
+BasicBlock 0x56003d399710:
+  IN  = {%v0}
+  OUT = {}
+

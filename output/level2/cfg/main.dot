@@ -1,0 +1,6 @@
+digraph "CFG of main" {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#add8e6", fontname="Courier", fontsize=10];
+  edge [fontname="Courier", fontsize=9];
+  "0x5638249e67e0" [label="entry:\l  %v = alloca\l  %v = alloca\l  %v = alloca\l  ... (10 more)\l  ret %9\l", fillcolor="#90ee90", style="rounded,filled", penwidth=2];
+}

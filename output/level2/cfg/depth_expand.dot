@@ -1,0 +1,22 @@
+digraph "CFG of depth_expand" {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#add8e6", fontname="Courier", fontsize=10];
+  edge [fontname="Courier", fontsize=9];
+  "0x5638249ede90" [label="entry:\l  %v = alloca\l  %v = alloca\l  %v = alloca\l  ... (8 more)\l  br %11 ? ... : ...\l", fillcolor="#90ee90", style="rounded,filled", penwidth=2];
+  "0x5638249edf50" [label="BB1:\l  %v = load\l  store\l  br ...\l"];
+  "0x5638249ee510" [label="BB2:\l  %v = load\l  %v = load\l  %v = add\l  ... (2 more)\l  br ...\l"];
+  "0x5638249ee9d0" [label="BB3:\l  %v = load\l  %v = load\l  %v = icmp slt\l  br %21 ? ... : ...\l"];
+  "0x5638249eec00" [label="BB4:\l  %v = load\l  %v = load\l  %v = add\l  ... (10 more)\l  br ...\l"];
+  "0x5638249ef400" [label="BB5:\l  %v = load\l  %v = add\l  store\l  br ...\l"];
+  "0x5638249eec50" [label="BB6:\l  %v = load\l  store\l  br ...\l"];
+  "0x5638249ee710" [label="BB7:\l  %v = load\l  ret %41\l", fillcolor="#f08080", style="rounded,filled"];
+  "0x5638249ede90" -> "0x5638249edf50" [label="T", color=green];
+  "0x5638249ede90" -> "0x5638249ee510" [label="F", color=red];
+  "0x5638249edf50" -> "0x5638249ee710";
+  "0x5638249ee510" -> "0x5638249ee9d0";
+  "0x5638249ee9d0" -> "0x5638249eec00" [label="T", color=green];
+  "0x5638249ee9d0" -> "0x5638249eec50" [label="F", color=red];
+  "0x5638249eec00" -> "0x5638249ef400";
+  "0x5638249ef400" -> "0x5638249ee9d0";
+  "0x5638249eec50" -> "0x5638249ee710";
+}

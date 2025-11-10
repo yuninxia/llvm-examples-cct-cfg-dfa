@@ -1,0 +1,6 @@
+digraph "CFG of main" {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#add8e6", fontname="Courier", fontsize=10];
+  edge [fontname="Courier", fontsize=9];
+  "0x55d9e74edf10" [label="entry:\l  %v = alloca\l  store\l  %v = call @foo\l  ... (1 more)\l  ret 0\l", fillcolor="#90ee90", style="rounded,filled", penwidth=2];
+}

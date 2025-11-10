@@ -94,3 +94,8 @@ fi
 
 echo "[runme] Level 1 outputs under $OUTDIR/level1 (IR/cfg/liveness/cct)"
 echo "[runme] Level 2 outputs under $OUTDIR/level2 (IR/cfg/liveness/cct)"
+
+if [[ "${RUN_VISUALIZE:-0}" == "1" ]]; then
+  echo "[runme] RUN_VISUALIZE=1 -> invoking visualization pipeline"
+  SKIP_RUNME=1 ./visualize.sh
+fi

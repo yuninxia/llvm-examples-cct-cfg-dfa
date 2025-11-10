@@ -1,0 +1,20 @@
+BasicBlock 0x56003d39d120:
+  IN  = {}
+  OUT = {%v0, %v1, %v2, %v3}
+
+BasicBlock 0x56003d39d5f0:
+  IN  = {%v0, %v1, %v2, %v3}
+  OUT = {%v0, %v1, %v2, %v3}
+
+BasicBlock 0x56003d39d280:
+  IN  = {%v0, %v1, %v2, %v3}
+  OUT = {%v0, %v1, %v2, %v3}
+
+BasicBlock 0x56003d39dd60:
+  IN  = {%v0, %v1, %v2, %v3}
+  OUT = {%v0, %v1, %v2, %v3}
+
+BasicBlock 0x56003d39d8b0:
+  IN  = {%v2}
+  OUT = {}
+

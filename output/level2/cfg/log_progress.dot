@@ -1,0 +1,15 @@
+digraph "CFG of log_progress" {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#add8e6", fontname="Courier", fontsize=10];
+  edge [fontname="Courier", fontsize=9];
+  "0x5638249f32b0" [label="entry:\l  %v = alloca\l  %v = alloca\l  %v = alloca\l  ... (4 more)\l  br ...\l", fillcolor="#90ee90", style="rounded,filled", penwidth=2];
+  "0x5638249f37d0" [label="BB1:\l  %v = load\l  %v = load\l  %v = icmp ult\l  br %10 ? ... : ...\l"];
+  "0x5638249f3410" [label="BB2:\l  %v = load\l  %v = load\l  %v = getelementptr\l  ... (1 more)\l  br ...\l"];
+  "0x5638249f3f20" [label="BB3:\l  %v = load\l  %v = add\l  store\l  br ...\l"];
+  "0x5638249f3a90" [label="BB4:\l  %v = load\l  %v = load\l  %v = call @sum_weights\l  ... (1 more)\l  ret\l", fillcolor="#f08080", style="rounded,filled"];
+  "0x5638249f32b0" -> "0x5638249f37d0";
+  "0x5638249f37d0" -> "0x5638249f3410" [label="T", color=green];
+  "0x5638249f37d0" -> "0x5638249f3a90" [label="F", color=red];
+  "0x5638249f3410" -> "0x5638249f3f20";
+  "0x5638249f3f20" -> "0x5638249f37d0";
+}

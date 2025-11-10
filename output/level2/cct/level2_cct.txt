@@ -1,0 +1,22 @@
+-- progress snapshot --
+task #0 weight=5 fanout=2
+task #1 weight=8 fanout=3
+task #2 weight=11 fanout=4
+task #3 weight=14 fanout=5
+task #4 weight=17 fanout=2
+total weight=55
+=== Calling Context Tree ===
+main [1]
+  seed_tasks [1]
+  run_pipeline [1]
+    sum_weights [3]
+    fanout_walk [5]
+      depth_expand [5]
+        depth_expand [16]
+          depth_expand [39]
+            depth_expand [78]
+              depth_expand [108]
+                depth_expand [120]
+  log_progress [1]
+    sum_weights [1]
+    print_task [5]
