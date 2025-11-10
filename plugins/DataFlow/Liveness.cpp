@@ -7,13 +7,22 @@
 #include "llvm/IR/Function.h"
 #include "llvm/IR/InstrTypes.h"
 #include "llvm/IR/Instruction.h"
+#include "llvm/IR/Use.h"
 #include "llvm/IR/PassManager.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Support/FileSystem.h"
 #include "llvm/Support/raw_ostream.h"
+#include <cstdlib>
+#include <string>
 
 using namespace llvm;
+
+static std::string getDumpDir() {
+  if (const char *Base = std::getenv("LLVM_EXAMPLES_OUTDIR"))
+    return std::string(Base) + "/liveness";
+  return "output/liveness";
+}
 
 namespace {
 
@@ -48,7 +57,7 @@ public:
 
       for (Instruction &I : BB) {
         // Uses: any operand that is a definable instruction not yet defined here
-        for (Use &Op : I.operands()) {
+        for (llvm::Use &Op : I.operands()) {
           if (auto *OpI = dyn_cast<Instruction>(Op.get())) {
             auto It = InstToIdx.find(OpI);
             if (It != InstToIdx.end()) {
@@ -93,8 +102,9 @@ public:
 
     // Write a plain-text report
     std::error_code EC;
-    sys::fs::create_directories("liveness");
-    std::string FileName = ("liveness/" + F.getName() + ".txt").str();
+    std::string DumpDir = getDumpDir();
+    sys::fs::create_directories(DumpDir);
+    std::string FileName = (DumpDir + "/" + F.getName().str() + ".txt");
     raw_fd_ostream OS(FileName, EC, sys::fs::OF_Text);
     if (EC) {
       errs() << "Liveness: couldn't open " << FileName << ": " << EC.message() << "\n";

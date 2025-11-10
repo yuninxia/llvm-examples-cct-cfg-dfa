@@ -6,8 +6,16 @@
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Support/FileSystem.h"
 #include "llvm/Support/raw_ostream.h"
+#include <cstdlib>
+#include <string>
 
 using namespace llvm;
+
+static std::string getDumpDir() {
+  if (const char *Base = std::getenv("LLVM_EXAMPLES_OUTDIR"))
+    return std::string(Base) + "/cfg";
+  return "output/cfg";
+}
 
 namespace {
 class CFGDotPass : public PassInfoMixin<CFGDotPass> {
@@ -17,11 +25,12 @@ public:
       return PreservedAnalyses::all();
 
     // Ensure output dir exists
+    std::string DumpDir = getDumpDir();
     std::error_code EC;
-    sys::fs::create_directories("cfg");
+    sys::fs::create_directories(DumpDir);
 
     // One DOT per function
-    std::string FileName = ("cfg/" + F.getName() + ".dot").str();
+    std::string FileName = (DumpDir + "/" + F.getName().str() + ".dot");
     raw_fd_ostream OS(FileName, EC, sys::fs::OF_Text);
     if (EC) {
       errs() << "CFGDot: couldn't open " << FileName << ": " << EC.message() << "\n";
